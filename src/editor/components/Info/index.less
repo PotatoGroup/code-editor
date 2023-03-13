@@ -1,0 +1,68 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  user-select: none;
+  padding: 0 12px;
+  .header {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(139, 143, 163);
+  }
+  .type {
+    color: #f1d187;
+    font-size: 13px;
+    font-style: italic;
+  }
+  .content {
+    font-size: 13px;
+    color: #888;
+  }
+}
+
+.infoIcon-function:before {
+  content: "ƒ";
+  margin-right: 2px;
+}
+.infoIcon-class:before {
+  content: "○";
+  margin-right: 2px;
+}
+.infoIcon-interface:before {
+  content: "◌";
+  margin-right: 2px;
+}
+.infoIcon-variable:before {
+  content: "𝑥";
+  margin-right: 2px;
+}
+.infoIcon-constant:before {
+  content: "𝐶";
+  margin-right: 2px;
+}
+.infoIcon-type:before {
+  content: "𝑡";
+  margin-right: 2px;
+}
+.infoIcon-enum:before {
+  content: "∪";
+  margin-right: 2px;
+}
+.infoIcon-property:before {
+  content: "□";
+  margin-right: 2px;
+}
+.infoIcon-keyword:before {
+  content: "🔑︎";
+  margin-right: 2px;
+}
+.infoIcon-namespace:before {
+  content: "▢";
+  margin-right: 2px;
+}
+.infoIcon-text:before {
+  content: "abc";
+  font-size: 50%;
+  vertical-align: middle;
+  margin-right: 2px;
+}

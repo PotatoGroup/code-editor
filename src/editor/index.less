@@ -1,0 +1,65 @@
+.container {
+  :global {
+    .ͼ1 {
+      outline: 1px solid #d9d9d9;
+      border-radius: 6px;
+    }
+    .ͼ1.cm-focused {
+      outline-color: #4096ff;
+    }
+    .ͼ1 .cm-tooltip {
+      border: none;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.1);
+      padding: 16px 8px 16px 8px;
+      transform: translate(0, 10px);
+      margin: 0 5px;
+    }
+    .ͼ1 .cm-tooltip-autocomplete ul {
+      padding: 0 2px;
+      overflow: hidden auto;
+      scrollbar-color: #efefef;
+      li {
+        padding: 0 8px;
+        background: inherit;
+        color: rgb(51, 51, 51);
+        line-height: 1.75;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        white-space: pre-wrap;
+        &:hover {
+          background-color: rgba(242, 247, 252, 0.6);
+        }
+      }
+      &::-webkit-scrollbar {
+        -ms-overflow-style: none;
+        width: 4px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+      }
+    }
+    .ͼ1 .cm-tooltip-autocomplete ul li[aria-selected] {
+      background-color: rgb(242, 247, 252);
+      font-weight: 600;
+    }
+    .ͼ1 .cm-completionDetail {
+      margin-left: auto;
+      font-style: inherit;
+      font-size: 13px;
+      color: rgb(139, 143, 163);
+    }
+    .ͼ1 .cm-completionInfo {
+      top: -10px !important;
+      width: 200px;
+    }
+    .ͼ1 .cm-line * {
+      color: #333;
+    }
+  }
+}
