@@ -5,7 +5,6 @@ export const findCompletions = (
   path: string[],
   completions: AutoCompletion[]
 ) => {
-  console.log(keyword)
   if (!path.length) {
     if (!keyword.trim()) {
       return completions;

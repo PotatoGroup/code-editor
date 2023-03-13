@@ -37,11 +37,14 @@ module.exports = {
             },
           },
         ],
-        exclude: /node_modules/,
       },
     ],
   },
   resolve: {
     extensions: [".tsx", ".jsx", ".ts", ".js"],
   },
+  externals: {
+    react: "react",
+    "react-dom/client": "react-dom/client"
+  }
 };
