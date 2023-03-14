@@ -1,9 +1,12 @@
+import { CSSProperties } from "react";
 import { Completion } from "@codemirror/autocomplete";
+import { Theme } from "./extension/theme";
 
 export interface CodeEditorConfig {
   value: string;
-  onChange: (value: string) => void;
+  theme: Theme;
   completions: Array<AutoCompletion>;
+  onChange: (value: string) => void;
 }
 
 export enum CompletionType {

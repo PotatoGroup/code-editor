@@ -1,24 +1,26 @@
 import React, { useEffect, useRef } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
+import { javascript } from "@codemirror/lang-javascript";
+import { xcodeLight } from "@uiw/codemirror-theme-xcode";
+import { autocompletion } from "@codemirror/autocomplete";
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import {
   CompletionDisplay,
   completionSource,
   EventExt,
   UpdateListener,
+  customTheme
 } from "./extension";
-import { javascript } from "@codemirror/lang-javascript";
-import { xcodeLight } from "@uiw/codemirror-theme-xcode";
 import { CodeEditorConfig } from "./type";
-import { autocompletion } from "@codemirror/autocomplete";
-import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import styles from "./index.less";
 
 export const CodeEditor = ({
   value,
-  onChange,
+  theme,
   completions,
-}: CodeEditorConfig) => {
+  onChange,
+}: Partial<CodeEditorConfig>) => {
   const containerRef = useRef();
   useEffect(() => {
     const state = EditorState.create({
@@ -36,6 +38,7 @@ export const CodeEditor = ({
           searchKeymap: false,
           syntaxHighlighting: true,
         }),
+        customTheme(theme),
         EventExt,
         xcodeLight,
         javascript(),
