@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
+import { EditorView } from "@codemirror/view";
 import {
   CompletionDisplay,
   completionSource,
@@ -10,11 +10,8 @@ import {
 import { javascript } from "@codemirror/lang-javascript";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
 import { CodeEditorConfig } from "./type";
-import {
-  autocompletion,
-  closeBrackets,
-  closeBracketsKeymap,
-} from "@codemirror/autocomplete";
+import { autocompletion } from "@codemirror/autocomplete";
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import styles from "./index.less";
 
 export const CodeEditor = ({
@@ -27,7 +24,18 @@ export const CodeEditor = ({
     const state = EditorState.create({
       doc: value,
       extensions: [
-        closeBrackets(),
+        basicSetup({
+          lineNumbers: false,
+          foldGutter: false,
+          highlightActiveLine: false,
+          bracketMatching: true,
+          closeBrackets: true,
+          closeBracketsKeymap: true,
+          tabSize: 2,
+          autocompletion: true,
+          searchKeymap: false,
+          syntaxHighlighting: true,
+        }),
         EventExt,
         xcodeLight,
         javascript(),

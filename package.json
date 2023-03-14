@@ -1,12 +1,14 @@
 {
-  "name": "@potato-group/code-editor",
-  "version": "1.0.0-beta.6",
+  "name": "@mybricks/expression-editor",
+  "version": "1.0.0",
   "main": "dist/index.min.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack"
+    "build": "rm -rf dist && webpack"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
@@ -30,6 +32,7 @@
     "@codemirror/lang-javascript": "^6.1.4",
     "@codemirror/state": "^6.2.0",
     "@codemirror/view": "^6.9.2",
+    "@uiw/codemirror-extensions-basic-setup": "^4.19.9",
     "@uiw/codemirror-extensions-events": "^4.19.9",
     "@uiw/codemirror-theme-xcode": "^4.19.9"
   },

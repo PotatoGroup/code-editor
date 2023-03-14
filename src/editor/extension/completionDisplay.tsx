@@ -32,6 +32,15 @@ const defineInfoRenderer = (completions: AutoCompletion[]) => {
   });
 };
 
+const triggerWithSpecialChar = (docInfo, word) => {
+  const specialChar = ['!', '@', '#', '$', '^', '&', '*', ',', '-', '~', '\\']
+  const endChar = Array.from(word.text).pop() as string
+  if (docInfo.name === '' && specialChar.includes(endChar)) {
+    return true
+  }
+  return false
+}
+
 export const completionSource = (completions: AutoCompletion[]) => async (
   context: CompletionContext
 ): Promise<CompletionResult> => {
@@ -50,12 +59,14 @@ export const completionSource = (completions: AutoCompletion[]) => async (
   if (word && word.from == word.to && !context.explicit) {
     return null;
   }
-  const from = !!docInfo?.path.length
-    ? docInfo?.path.join(".").length + 1
-    : word?.from!;
+
+  let from = context.pos - docInfo.name.length;
+  if(triggerWithSpecialChar(docInfo, word)){
+    from--;
+  }
   return {
     from,
-    options: definedCompletions,
+    options: definedCompletions
   };
 };
 
