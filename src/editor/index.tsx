@@ -18,7 +18,7 @@ import styles from "./index.less";
 export const CodeEditor = ({
   value,
   theme,
-  completions,
+  completions = [],
   onChange,
 }: Partial<CodeEditorConfig>) => {
   const containerRef = useRef();
