@@ -16,11 +16,7 @@ export const customTheme = (theme: Theme) => {
     "&.cm-editor.cm-focused": {
       outline: "1px solid #4096ff",
     },
-    "&.ͼ1 .cm-matchingBracket": {
-      color: "#40A072",
-      backgroundColor: "#fff",
-    },
-    "&.ͼ1.cm-focused .cm-matchingBracket": {
+    "&.ͼ1 .cm-matchingBracket, &.ͼ1.cm-focused .cm-matchingBracket": {
       color: "#40A072",
       backgroundColor: "#fff",
     },

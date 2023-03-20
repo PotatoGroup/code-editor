@@ -1,4 +1,3 @@
-import { CSSProperties } from "react";
 import { Completion } from "@codemirror/autocomplete";
 import { Theme } from "./extension/theme";
 

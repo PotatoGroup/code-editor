@@ -20,6 +20,7 @@ export const CodeEditor = ({
   theme,
   completions,
   onChange,
+
 }: Partial<CodeEditorConfig>) => {
   const containerRef = useRef();
   useEffect(() => {
@@ -39,7 +40,7 @@ export const CodeEditor = ({
           syntaxHighlighting: true,
         }),
         customTheme(theme),
-        EventExt,
+        EventExt(),
         xcodeLight,
         javascript(),
         autocompletion({
