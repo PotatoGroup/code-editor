@@ -20,7 +20,6 @@ export const CodeEditor = ({
   theme,
   completions,
   onChange,
-
 }: Partial<CodeEditorConfig>) => {
   const containerRef = useRef();
   useEffect(() => {
