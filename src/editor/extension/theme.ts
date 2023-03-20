@@ -5,7 +5,7 @@ export type Theme = Partial<Record<keyof typeof ThemeKey, CSSProperties>>;
 
 enum ThemeKey {
   focused = "&.cm-editor.cm-focused",
-  matchingBracket = "&.ͼ1 .cm-matchingBracket",
+  matchingBracket = "&.ͼ1 .cm-matchingBracket, &.ͼ1.cm-focused .cm-matchingBracket",
 }
 
 export const customTheme = (theme: Theme) => {
