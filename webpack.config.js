@@ -6,10 +6,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "index.min.js",
     library: {
-        name: "CodeEditor",
-        type: "umd"
+      name: "CodeEditor",
+      type: "umd",
     },
-    globalObject: "this"
+    globalObject: "this",
   },
   module: {
     rules: [
@@ -44,7 +44,17 @@ module.exports = {
     extensions: [".tsx", ".jsx", ".ts", ".js"],
   },
   externals: {
-    react: "react",
-    "react-dom/client": "react-dom/client"
-  }
+    react: {
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
+      root: "React",
+    },
+    "react-dom/client": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "react-dom",
+      root: "ReactDOM",
+    },
+  },
 };
