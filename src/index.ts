@@ -1,1 +1,1 @@
-export { CodeEditor, CodeEditor as default } from "./editor";
+export { default, default as CodeEditor } from "./editor";

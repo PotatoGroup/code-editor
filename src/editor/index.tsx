@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { EditorState } from "@codemirror/state";
+import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState } from "react";
+import { EditorState, Annotation } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
@@ -15,13 +15,24 @@ import {
 import { CodeEditorConfig } from "./type";
 import styles from "./index.less";
 
-export const CodeEditor = ({
+const External = Annotation.define<boolean>();
+
+const CodeEditor = ({
   value,
   theme,
   completions = [],
   onChange,
-}: Partial<CodeEditorConfig>) => {
+}: Partial<CodeEditorConfig>, ref: any) => {
   const containerRef = useRef();
+  const [view, setView] = useState<EditorView>()
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      view,
+    }),
+    [view],
+  )
   useEffect(() => {
     const state = EditorState.create({
       doc: value,
@@ -54,9 +65,28 @@ export const CodeEditor = ({
       parent: containerRef.current,
       state,
     });
+    setView(view)
     return () => {
       view.destroy();
     };
-  }, [value]);
+  }, []);
+
+  useEffect(() => {
+    if (value === undefined) {
+      return;
+    }
+    const currentValue = view ? view.state.doc.toString() : '';
+    if (view && value !== currentValue) {
+      view.dispatch({
+        changes: { from: 0, to: currentValue.length, insert: value || '' },
+        annotations: [External.of(true)],
+      });
+    }
+  }, [value, view]);
+
   return <div className={styles.container} ref={containerRef} />;
 };
+
+
+
+export default forwardRef<any, Partial<CodeEditorConfig>>(CodeEditor)
