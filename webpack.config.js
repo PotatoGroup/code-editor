@@ -44,7 +44,17 @@ module.exports = {
     extensions: [".tsx", ".jsx", ".ts", ".js"],
   },
   externals: {
-    react: 'React',
-    "react-dom/client": 'ReactDOM',
+    react: {
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
+      root: "React",
+    },
+    "react-dom/client": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "react-dom",
+      root: "ReactDOM",
+    },
   },
 };
