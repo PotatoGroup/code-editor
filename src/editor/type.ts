@@ -2,6 +2,7 @@ import { Completion } from "@codemirror/autocomplete";
 import { Theme } from "./extension/theme";
 
 export interface CodeEditorConfig {
+  placeholder: string,
   value: string;
   theme: Theme;
   completions: Array<AutoCompletion>;

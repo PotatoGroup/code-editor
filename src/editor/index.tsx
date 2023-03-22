@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState } from "react";
-import { EditorState, Annotation } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
+import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState, useMemo } from "react";
+import { EditorState, Annotation, StateEffect } from "@codemirror/state";
+import { EditorView, placeholder } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
 import { autocompletion } from "@codemirror/autocomplete";
@@ -21,6 +21,7 @@ const CodeEditor = ({
   value,
   theme,
   completions = [],
+  placeholder: placeholderStr = '请输入表达式',
   onChange,
 }: Partial<CodeEditorConfig>, ref: any) => {
   const containerRef = useRef();
@@ -33,6 +34,16 @@ const CodeEditor = ({
     }),
     [view],
   )
+
+  const _customTheme = useMemo(() => customTheme(theme), [theme])
+
+  const autoCompletion = useMemo(() => autocompletion({
+    activateOnTyping: false,
+    override: [completionSource(completions)],
+  }), [completions])
+
+  const placeHolder = useMemo(() => placeholder(placeholderStr), [placeholderStr])
+
   useEffect(() => {
     const state = EditorState.create({
       doc: value,
@@ -49,14 +60,12 @@ const CodeEditor = ({
           searchKeymap: false,
           syntaxHighlighting: true,
         }),
-        customTheme(theme),
+        _customTheme,
+        placeHolder,
         EventExt(),
         xcodeLight,
         javascript(),
-        autocompletion({
-          activateOnTyping: false,
-          override: [completionSource(completions)],
-        }),
+        autoCompletion,
         CompletionDisplay(),
         UpdateListener(onChange),
       ],
@@ -83,6 +92,16 @@ const CodeEditor = ({
       });
     }
   }, [value, view]);
+
+  useEffect(() => {
+    if (view) {
+      view.dispatch({ effects: StateEffect.reconfigure.of([placeHolder, _customTheme, autoCompletion]) });
+    }
+  }, [
+    placeHolder,
+    _customTheme,
+    autoCompletion,
+  ]);
 
   return <div className={styles.container} ref={containerRef} />;
 };

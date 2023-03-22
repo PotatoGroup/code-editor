@@ -9,7 +9,7 @@ import {
 } from "@codemirror/autocomplete";
 import { completionPath } from "@codemirror/lang-javascript";
 import { findCompletions, debounce } from "../utils";
-import { AutoCompletion } from "../type";
+import { AutoCompletion, CompletionType } from "../type";
 import Info from "../components/Info";
 import { EditorView } from "@codemirror/view";
 
@@ -24,6 +24,7 @@ const renderInfo = (completion) => {
 const defineInfoRenderer = (completions: AutoCompletion[]) => {
   return (completions || [])?.map((completion) => {
     return {
+      type: CompletionType.variable,
       ...completion,
       info: (completion: Completion) => {
         return renderInfo(completion);
