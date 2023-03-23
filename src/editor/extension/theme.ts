@@ -8,7 +8,7 @@ enum ThemeKey {
   matchingBracket = "&.ͼ1 .cm-matchingBracket, &.ͼ1.cm-focused .cm-matchingBracket",
 }
 
-export const customTheme = (theme: Theme = {}) => {
+export const defineTheme = (theme: Theme = {}) => {
   const defaultTheme = {
     "&": {
       backgroundColor: "#FFF",

@@ -10,7 +10,7 @@ import {
   completionSource,
   EventExt,
   UpdateListener,
-  customTheme
+  defineTheme
 } from "./extension";
 import { CodeEditorConfig } from "./type";
 import styles from "./index.less";
@@ -35,12 +35,7 @@ const CodeEditor = ({
     [view],
   )
 
-  const _customTheme = useMemo(() => customTheme(theme), [theme])
-
-  const autoCompletion = useMemo(() => autocompletion({
-    activateOnTyping: false,
-    override: [completionSource(completions)],
-  }), [completions])
+  const customTheme = useMemo(() => defineTheme(theme), [theme])
 
   const placeHolder = useMemo(() => placeholder(placeholderStr), [placeholderStr])
 
@@ -60,12 +55,15 @@ const CodeEditor = ({
           searchKeymap: false,
           syntaxHighlighting: true,
         }),
-        _customTheme,
+        customTheme,
         placeHolder,
         EventExt(),
         xcodeLight,
         javascript(),
-        autoCompletion,
+        autocompletion({
+          activateOnTyping: false,
+          override: [completionSource(completions)],
+        }),
         CompletionDisplay(),
         UpdateListener(onChange),
       ],
@@ -78,7 +76,7 @@ const CodeEditor = ({
     return () => {
       view.destroy();
     };
-  }, []);
+  }, [completions]);
 
   useEffect(() => {
     if (value === undefined) {
@@ -95,12 +93,11 @@ const CodeEditor = ({
 
   useEffect(() => {
     if (view) {
-      view.dispatch({ effects: StateEffect.reconfigure.of([placeHolder, _customTheme, autoCompletion]) });
+      view.dispatch({ effects: StateEffect.reconfigure.of([placeHolder, customTheme]) });
     }
   }, [
     placeHolder,
-    _customTheme,
-    autoCompletion,
+    customTheme,
   ]);
 
   return <div className={styles.container} ref={containerRef} />;
