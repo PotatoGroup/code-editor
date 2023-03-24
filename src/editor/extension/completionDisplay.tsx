@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import {
   Completion,
   CompletionContext,
@@ -16,8 +16,9 @@ import { EditorView } from "@codemirror/view";
 const renderInfo = (completion) => {
   const { docs: content, type, label: name } = completion;
   const hintDiv = document.createElement("div");
-  const hintContainer = ReactDOM.createRoot(hintDiv);
-  hintContainer.render(<Info info={{ content, type, name }} />);
+  ReactDOM.render(<Info info={{ content, type, name }} />, hintDiv)
+  // const hintContainer = ReactDOM.createRoot(hintDiv);
+  // hintContainer.render(<Info info={{ content, type, name }} />);
   return hintDiv;
 };
 

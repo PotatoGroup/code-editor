@@ -50,7 +50,7 @@ module.exports = {
       amd: "react",
       root: "React",
     },
-    "react-dom/client": {
+    "react-dom": {
       commonjs: "react-dom",
       commonjs2: "react-dom",
       amd: "react-dom",
