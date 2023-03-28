@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && webpack",
     "test": "webpack serve --config ./_test/server.js",
-    "publish": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org"
+    "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org"
   },
   "files": [
     "dist"
