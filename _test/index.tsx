@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { CodeEditor } from '../src'
 import completions from './completions'
@@ -6,10 +6,21 @@ import completions from './completions'
 const App = () => {
     const [value, setValue] = useState('')
     const [_completions, setCompletions] = useState([])
+    const countRef = useRef(0)
     useEffect(() => {
-        setCompletions(completions)
+        setTimeout(() => {
+            setCompletions(completions)
+        }, 1000)
     }, [])
-    return <CodeEditor value={value} completions={_completions} onChange={(value) => setValue(value)} />
+
+    const onChange = (value) => {
+        setValue(value)
+    }
+    return <CodeEditor value={value} completions={_completions} theme={{
+        focused: {
+            outline: "1px solid #fa6400",
+        }
+    }} onChange={onChange} />
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element)
