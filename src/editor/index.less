@@ -11,7 +11,6 @@
       box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.1);
       padding: 16px 8px 16px 8px;
       transform: translate(0, 10px);
-      margin: 0 5px;
       z-index: 1000;
     }
     .cm-editor .cm-tooltip-autocomplete ul {
@@ -33,14 +32,17 @@
           background-color: rgba(242, 247, 252, 0.6);
         }
       }
-      &::-webkit-scrollbar {
-        -ms-overflow-style: none;
-        width: 4px;
+      &:hover{
+        &::-webkit-scrollbar {
+          -ms-overflow-style: none;
+          width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #ccc;
+          border-radius: 10px;
+        }
       }
-      &::-webkit-scrollbar-thumb {
-        background: #ccc;
-        border-radius: 10px;
-      }
+      
     }
     .cm-editor .cm-tooltip-autocomplete ul li[aria-selected] {
       background-color: rgb(242, 247, 252);
@@ -55,6 +57,12 @@
     .cm-editor .cm-completionInfo {
       top: -10px !important;
       width: 200px;
+    }
+    .cm-editor .cm-completionInfo-left {
+      margin-right: 5px;
+    }
+    .cm-editor .cm-completionInfo-right {
+      margin-left: 5px;
     }
   }
 }

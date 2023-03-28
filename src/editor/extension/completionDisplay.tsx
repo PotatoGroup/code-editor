@@ -14,9 +14,9 @@ import Info from "../components/Info";
 import { EditorView } from "@codemirror/view";
 
 const renderInfo = (completion) => {
-  const { docs: content, type, label: name } = completion;
+  const { docs: content, type, label: name, detail } = completion;
   const hintDiv = document.createElement("div");
-  ReactDOM.render(<Info info={{ content, type, name }} />, hintDiv)
+  ReactDOM.render(<Info info={{ content: detail ?? content, type, name }} />, hintDiv)
   // const hintContainer = ReactDOM.createRoot(hintDiv);
   // hintContainer.render(<Info info={{ content, type, name }} />);
   return hintDiv;
@@ -24,11 +24,12 @@ const renderInfo = (completion) => {
 
 const defineInfoRenderer = (completions: AutoCompletion[]) => {
   return (completions || [])?.map((completion) => {
+    const showInfo = completion.detail || completion.docs
     return {
       type: CompletionType.variable,
       ...completion,
       info: (completion: Completion) => {
-        return renderInfo(completion);
+        return showInfo ? renderInfo(completion) : null;
       },
     };
   });
@@ -63,12 +64,12 @@ export const completionSource = (completions: AutoCompletion[]) => async (
   }
 
   let from = context.pos - docInfo.name.length;
-  if(triggerWithSpecialChar(docInfo, word)){
+  if (triggerWithSpecialChar(docInfo, word)) {
     from--;
   }
   return {
     from,
-    options: definedCompletions
+    options: definedCompletions,
   };
 };
 
