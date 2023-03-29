@@ -1,6 +1,6 @@
 {
   "name": "@mybricks/expression-editor",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "main": "dist/index.min.js",
   "license": "MIT",
   "scripts": {
