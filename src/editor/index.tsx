@@ -40,7 +40,6 @@ const CodeEditor =({
   const placeHolder = useMemo(() => placeholder(placeholderStr), [placeholderStr])
 
   const autocompletionExtension = useMemo(() => autocompletion({
-    closeOnBlur: false,
     activateOnTyping: false,
     override: [completionSource(completions)],
   }), [completions])
