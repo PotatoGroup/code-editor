@@ -4,6 +4,7 @@
   "main": "dist/index.min.js",
   "license": "MIT",
   "scripts": {
+    "build:type": "tsc --emitDeclarationOnly",
     "build": "rm -rf dist && webpack",
     "test": "webpack serve --config ./_test/server.js",
     "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org"
