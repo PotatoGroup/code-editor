@@ -1,23 +1,26 @@
-type Code = string | undefined;
-type Context = Record<string, any> | undefined;
+type Options = Partial<{
+  prefix: string;
+  context: Record<string, any>;
+}>;
 
 export default class Sandbox {
-  private context: Context;
-  constructor(context: Context) {
-    this.context = context;
+  private options: Options = {};
+  constructor(options: Options) {
+    this.options = options;
   }
-  private unscopeCompileCode(code: Code) {
+  private unscopeCompileCode(prefix: string = 'context', expression: string) {
     return new Function(
-      "context",
-      `with(context){
-            return ${code}
+      prefix,
+      `with(${prefix}){
+            return ${expression}
         }`
     );
   }
-  private scopeCompileCode(code: Code) {
-    const fn = this.unscopeCompileCode(code);
+  private scopeCompileCode(expression: string) {
+    const fn = this.unscopeCompileCode(this.options.prefix, expression);
     return (sandbox) => {
-      const proxy = new Proxy(sandbox, {
+      const _target = this.options.prefix ? { [this.options.prefix]: sandbox } : sandbox;
+      const proxy = new Proxy(_target, {
         // 拦截所有属性，防止到 Proxy 对象以外的作用域链查找
         has(target, key) {
           return true;
@@ -28,13 +31,26 @@ export default class Sandbox {
             return undefined;
           }
           return Reflect.get(target, key, receiver);
-        },
+        }
       });
       return fn(proxy);
     };
   }
-  execute(code: Code) {
-    const fn = this.scopeCompileCode(code);
-    return fn.call(this, this.context);
+  execute(expression: string) {
+    const fn = this.scopeCompileCode(expression);
+    const _context = this.options.context ?? {};
+    return fn.call(this, _context);
+  }
+  executeWithTemplate(expression: string) {
+    const reg = /\{(.+)\}/g;
+    const retStr = expression.replace(reg, (...args) => {
+      const ret = this.execute(args[1]);
+      return JSON.stringify(ret);
+    });
+    try {
+      return JSON.parse(retStr)
+    } catch (error) {
+      return retStr
+    }
   }
 }
