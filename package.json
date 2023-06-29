@@ -1,8 +1,7 @@
 {
   "name": "@astii/code-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.min.js",
-  
   "scripts": {
     "build:type": "tsc --emitDeclarationOnly",
     "build": "rm -rf dist && npm run build:type &&  webpack",
@@ -51,7 +50,10 @@
     "url": "git+https://github.com/PotatoGroup/code-editor.git"
   },
   "homepage": "https://github.com/PotatoGroup/code-editor#readme",
-  "keywords": ["codemirror", "editor"],
+  "keywords": [
+    "codemirror",
+    "editor"
+  ],
   "license": "ISC",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
