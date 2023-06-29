@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-import { CodeEditor } from '../src'
+import { CodeEditor } from '../dist/index.min.js'
 import completions from './completions'
 
 const App = () => {
     const [value, setValue] = useState('')
     const [_completions, setCompletions] = useState([])
-    const countRef = useRef(0)
     useEffect(() => {
-        setTimeout(() => {
-            setCompletions(completions)
-        }, 1000)
+        setCompletions(completions)
     }, [])
 
     const onChange = (value) => {

@@ -1,11 +1,11 @@
 {
-  "name": "@mybricks/expression-editor",
-  "version": "1.0.13",
+  "name": "@astii/code-editor",
+  "version": "1.0.0",
   "main": "dist/index.min.js",
   "license": "MIT",
   "scripts": {
     "build:type": "tsc --emitDeclarationOnly",
-    "build": "rm -rf dist && webpack",
+    "build": "rm -rf dist && npm run build:type &&  webpack",
     "test": "webpack serve --config ./_test/server.js",
     "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org"
   },
@@ -45,6 +45,12 @@
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },
+  "author": "tangxiaoxin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PotatoGroup/code-editor.git"
+  },
+  "homepage": "https://github.com/PotatoGroup/code-editor#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   }
