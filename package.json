@@ -7,7 +7,7 @@
     "build:type": "tsc --emitDeclarationOnly",
     "build": "rm -rf dist && npm run build:type &&  webpack",
     "test": "webpack serve --config ./_test/server.js",
-    "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org"
+    "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org --access=public"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
