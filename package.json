@@ -1,12 +1,13 @@
 {
   "name": "@astii/code-editor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.min.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build:type": "tsc --emitDeclarationOnly",
     "build": "rm -rf dist && npm run build:type &&  webpack",
-    "test": "webpack serve --config ./_test/server.js",
-    "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org --access=public"
+    "publishToNpm": "npm run build && npm version patch && npm publish --registry=https://registry.npmjs.org --access=public",
+    "test": "webpack serve --config ./_test/server.js"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

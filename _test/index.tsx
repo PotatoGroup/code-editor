@@ -13,11 +13,7 @@ const App = () => {
     const onChange = (value) => {
         setValue(value)
     }
-    return <CodeEditor value={value} completions={_completions} theme={{
-        focused: {
-            outline: "1px solid #fa6400",
-        }
-    }} onChange={onChange} />
+    return <CodeEditor value={value} completions={_completions} onChange={onChange} />
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element)

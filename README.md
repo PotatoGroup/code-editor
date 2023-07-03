@@ -1,3 +1,7 @@
+<div align="center">
+   <img src="./icon.jpg" height="200"/>
+</div>
+
 # code-editor
 
 a JS code editor based on codeMirror, support code autoCompletion, which can be used with [@astii/expression-sandbox](https://github.com/PotatoGroup/expression-sandbox/)
