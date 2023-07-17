@@ -4,6 +4,7 @@ import { EditorView } from "@codemirror/view";
 export type Theme = Partial<Record<keyof typeof ThemeKey, CSSProperties>>;
 
 enum ThemeKey {
+  root = "&",
   focused = "&.cm-editor.cm-focused",
   matchingBracket = "&.ͼ1 .cm-matchingBracket, &.ͼ1.cm-focused .cm-matchingBracket",
 }
@@ -11,7 +12,9 @@ enum ThemeKey {
 export const defineTheme = (theme: Theme = {}) => {
   const defaultTheme = {
     "&": {
-      backgroundColor: "#FFF",
+      backgroundColor: "inherit !important",
+      height: "100%",
+      width: "100%",
     },
     "&.cm-editor.cm-focused": {
       outline: "1px solid #4096ff",

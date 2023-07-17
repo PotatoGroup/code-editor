@@ -7,6 +7,7 @@ export interface CodeEditorConfig {
   theme: Theme;
   completions: Array<AutoCompletion>;
   onChange: (value: string) => void;
+  className: string;
 }
 
 export enum CompletionType {

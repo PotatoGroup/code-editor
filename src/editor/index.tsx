@@ -22,6 +22,7 @@ const CodeEditor =({
   theme,
   completions = [],
   placeholder: placeholderStr = '请输入表达式',
+  className,
   onChange,
 }: Partial<CodeEditorConfig>, ref: any) => {
   const containerRef = useRef();
@@ -102,7 +103,7 @@ const CodeEditor =({
   //   customTheme,
   // ]);
 
-  return <div className={styles.container} ref={containerRef} />;
+  return <div className={`${styles.container} ${className}`} ref={containerRef} />;
 };
 
 
