@@ -1,12 +1,13 @@
 import { Completion } from "@codemirror/autocomplete";
 import { Theme } from "./extension/theme";
+import { ViewUpdate } from "@codemirror/view";
 
 export interface CodeEditorConfig {
   placeholder: string,
   value: string;
   theme: Theme;
   completions: Array<AutoCompletion>;
-  onChange: (value: string) => void;
+  onChange: (value: string, view: ViewUpdate) => void;
   className: string;
 }
 

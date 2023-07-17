@@ -43,7 +43,7 @@ const CodeEditor =({
   const autocompletionExtension = useMemo(() => autocompletion({
     activateOnTyping: false,
     override: [completionSource(completions)],
-  }), [completions])
+  }), [])
 
   useEffect(() => {
     const state = EditorState.create({
@@ -69,6 +69,7 @@ const CodeEditor =({
         autocompletionExtension,
         CompletionDisplay(),
         UpdateListener(onChange),
+        EditorView.lineWrapping
       ],
     });
     const view = new EditorView({

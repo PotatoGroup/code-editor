@@ -9,14 +9,14 @@ export const findCompletions = (
     if (!keyword.trim()) {
       return completions;
     } else {
-      return completions.filter(({ label }) => label.startsWith(keyword));
+      return completions.filter(({ label }) => label?.startsWith(keyword));
     }
   } else {
     const childCompletions = findTargetLevel(path, completions);
     if (!keyword.trim()) {
       return childCompletions;
     } else {
-      return childCompletions.filter(({ label }) => label.startsWith(keyword));
+      return childCompletions.filter(({ label }) => label?.startsWith(keyword));
     }
   }
 };
