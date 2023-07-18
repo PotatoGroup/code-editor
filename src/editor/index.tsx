@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState, useMemo } from "react";
-import { EditorState, Annotation, StateEffect } from "@codemirror/state";
+import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState, useMemo, useCallback, Ref } from "react";
+import { EditorState, Annotation, EditorSelection, StateEffect } from "@codemirror/state";
 import { EditorView, placeholder } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
@@ -17,21 +17,30 @@ import styles from "./index.less";
 
 const External = Annotation.define<boolean>();
 
-const CodeEditor =({
+export type EditorViewRef = {
+  getDoc: () => string;
+  insertDoc: (text: string) => void;
+} | EditorView
+
+const CodeEditor = ({
   value,
   theme,
   completions = [],
   placeholder: placeholderStr = '请输入表达式',
   className,
   onChange,
-}: Partial<CodeEditorConfig>, ref: any) => {
+}: Partial<CodeEditorConfig>, ref: Ref<EditorViewRef>) => {
   const containerRef = useRef();
   const [view, setView] = useState<EditorView>()
 
   useImperativeHandle(
     ref,
     () => ({
-      view,
+      ...view,
+      getDoc() {
+        return view.state.doc.toString()
+      },
+      insertDoc
     }),
     [view],
   )
@@ -43,7 +52,15 @@ const CodeEditor =({
   const autocompletionExtension = useMemo(() => autocompletion({
     activateOnTyping: false,
     override: [completionSource(completions)],
-  }), [])
+  }), [completions])
+
+  const insertDoc = useCallback((text: string) => {
+    const { anchor, head } = view.state.selection.ranges[0]
+    view.dispatch({
+      changes: { from: head, insert: text || '' },
+      selection: EditorSelection.range(anchor, head),
+    });
+  }, [view])
 
   useEffect(() => {
     const state = EditorState.create({
@@ -80,7 +97,7 @@ const CodeEditor =({
     return () => {
       view.destroy();
     };
-  }, [autocompletionExtension]);
+  }, []);
 
   useEffect(() => {
     if (value === undefined) {
@@ -88,25 +105,23 @@ const CodeEditor =({
     }
     const currentValue = view ? view.state.doc.toString() : '';
     if (view && value !== currentValue) {
-      view.dispatch({
-        changes: { from: 0, to: currentValue.length, insert: value || '' },
-        annotations: [External.of(true)],
-      });
+      insertDoc(value)
     }
   }, [value, view]);
 
-  // useEffect(() => {
-  //   if (view) {
-  //     view.dispatch({ effects: StateEffect.reconfigure.of([placeHolder, customTheme]) });
-  //   }
-  // }, [
-  //   placeHolder,
-  //   customTheme,
-  // ]);
+  useEffect(() => {
+    if (view) {
+      view.state.update({effects: StateEffect.reconfigure.of([autocompletionExtension]) })
+    }
+  }, [
+    placeHolder,
+    customTheme,
+    autocompletionExtension
+  ]);
 
   return <div className={`${styles.container} ${className}`} ref={containerRef} />;
 };
 
 
 
-export default forwardRef<any, Partial<CodeEditorConfig>>(CodeEditor)
+export default forwardRef<EditorViewRef, Partial<CodeEditorConfig>>(CodeEditor)

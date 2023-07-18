@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 // import { CodeEditor } from '../dist/index.min.js'
 import { CodeEditor } from '../src/index'
@@ -8,6 +8,7 @@ import styles from './index.less'
 const App = () => {
     const [value, setValue] = useState('')
     const [_completions, setCompletions] = useState([])
+    const editorRef = useRef()
     useEffect(() => {
         setCompletions(completions)
     }, [])
@@ -16,7 +17,16 @@ const App = () => {
         setValue(value)
     }
 
-    return <CodeEditor className={styles.wrap} value={value} completions={_completions} onChange={onChange} />
+    const onClick = () => {
+        const text = 'sfsfsfs';
+        editorRef.current.insertDoc(text)
+    }
+
+
+    return <div>
+        <CodeEditor ref={editorRef} className={styles.wrap} value={value} completions={[]} onChange={onChange} />
+        <button type="button" onClick={onClick}>insert</button>
+    </div>
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element)
