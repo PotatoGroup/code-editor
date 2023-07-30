@@ -28,8 +28,13 @@ const App = () => {
         ref={editorRef}
         className={styles.wrap}
         value={value}
-        completions={[]}
+        completions={completions}
         onChange={onChange}
+        events={{
+          focus: (e) => {
+            console.log('focus', e)
+          }
+        }}
       />
       <button type="button" onClick={onClick}>
         insert

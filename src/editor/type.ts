@@ -1,4 +1,5 @@
 import { Completion } from "@codemirror/autocomplete";
+import { Events } from "@uiw/codemirror-extensions-events";
 import { Theme } from "./extension/theme";
 import { ViewUpdate } from "@codemirror/view";
 
@@ -8,6 +9,7 @@ export interface CodeEditorConfig {
   theme: Theme;
   completions: Array<AutoCompletion>;
   onChange: (value: string, view: ViewUpdate) => void;
+  events?: Events<keyof HTMLElementEventMap>;
   className: string;
 }
 

@@ -27,6 +27,7 @@ const CodeEditor = ({
   theme,
   completions = [],
   placeholder: placeholderStr = '请输入表达式',
+  events,
   className,
   onChange,
 }: Partial<CodeEditorConfig>, ref: Ref<EditorViewRef>) => {
@@ -80,7 +81,7 @@ const CodeEditor = ({
         }),
         customTheme,
         placeHolder,
-        EventExt(),
+        EventExt(events),
         xcodeLight,
         javascript(),
         autocompletionExtension,
