@@ -1,6 +1,6 @@
 {
   "name": "@astii/code-editor",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
   "scripts": {
