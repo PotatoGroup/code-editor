@@ -107,11 +107,11 @@ const CodeEditor = (
   );
 
   useEffect(() => {
-    EditorState.readOnly.of(!!options.readonly);
     const state = EditorState.create({
       doc: value,
       extensions: [
         basicSetup({ ...DefaultBasicOptions, ...options }),
+        EditorState.readOnly.of(!!options.readonly),
         customTheme,
         placeHolder,
         EventExt(events),
