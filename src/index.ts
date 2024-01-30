@@ -2,5 +2,6 @@ export { default, default as CodeEditor } from "./editor";
 export type {
   CodeEditorConfig,
   AutoCompletion,
-  CompletionType
+  CompletionType,
+  BasicSetOptions
 } from "./editor/type";

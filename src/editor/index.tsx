@@ -1,5 +1,19 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState, useMemo, useCallback, Ref } from "react";
-import { EditorState, Annotation, EditorSelection, StateEffect } from "@codemirror/state";
+import React, {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useMemo,
+  useCallback,
+  Ref,
+} from "react";
+import {
+  EditorState,
+  Annotation,
+  EditorSelection,
+  StateEffect,
+} from "@codemirror/state";
 import { EditorView, placeholder } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
@@ -10,75 +24,94 @@ import {
   completionSource,
   EventExt,
   UpdateListener,
-  defineTheme
+  defineTheme,
 } from "./extension";
 import { CodeEditorConfig } from "./type";
 import styles from "./index.less";
 
+const DefaultBasicOptions = {
+  lineNumbers: false,
+  foldGutter: false,
+  highlightActiveLine: false,
+  bracketMatching: true,
+  closeBrackets: true,
+  closeBracketsKeymap: true,
+  tabSize: 2,
+  autocompletion: true,
+  searchKeymap: false,
+  syntaxHighlighting: true,
+};
+
 const External = Annotation.define<boolean>();
 
-export type EditorViewRef = {
-  getDoc: () => string;
-  insertDoc: (text: string) => void;
-} | EditorView
+export type EditorViewRef =
+  | {
+      getDoc: () => string;
+      insertDoc: (text: string) => void;
+    }
+  | EditorView;
 
-const CodeEditor = ({
-  value,
-  theme,
-  completions = [],
-  placeholder: placeholderStr = '请输入表达式',
-  events,
-  className,
-  onChange,
-}: Partial<CodeEditorConfig>, ref: Ref<EditorViewRef>) => {
+const CodeEditor = (
+  {
+    value,
+    theme,
+    completions = [],
+    placeholder: placeholderStr = "请输入表达式",
+    events,
+    options = DefaultBasicOptions,
+    className,
+    onChange,
+  }: Partial<CodeEditorConfig>,
+  ref: Ref<EditorViewRef>
+) => {
   const containerRef = useRef();
-  const [view, setView] = useState<EditorView>()
+  const [view, setView] = useState<EditorView>();
 
   useImperativeHandle(
     ref,
     () => ({
       ...view,
       getDoc() {
-        return view.state.doc.toString()
+        return view.state.doc.toString();
       },
-      insertDoc
+      insertDoc,
     }),
-    [view],
-  )
+    [view]
+  );
 
-  const customTheme = useMemo(() => defineTheme(theme), [theme])
+  const customTheme = useMemo(() => defineTheme(theme), [theme]);
 
-  const placeHolder = useMemo(() => placeholder(placeholderStr), [placeholderStr])
+  const placeHolder = useMemo(
+    () => placeholder(placeholderStr),
+    [placeholderStr]
+  );
 
-  const autocompletionExtension = useMemo(() => autocompletion({
-    activateOnTyping: false,
-    override: [completionSource(completions)],
-  }), [completions])
+  const autocompletionExtension = useMemo(
+    () =>
+      autocompletion({
+        activateOnTyping: false,
+        override: [completionSource(completions)],
+      }),
+    [completions]
+  );
 
-  const insertDoc = useCallback((text: string) => {
-    const { anchor, head } = view.state.selection.ranges[0]
-    view.dispatch({
-      changes: { from: head, insert: text || '' },
-      selection: EditorSelection.range(anchor, head),
-    });
-  }, [view])
+  const insertDoc = useCallback(
+    (text: string) => {
+      const { anchor, head } = view.state.selection.ranges[0];
+      view.dispatch({
+        changes: { from: head, insert: text || "" },
+        selection: EditorSelection.range(anchor, head),
+      });
+    },
+    [view]
+  );
 
   useEffect(() => {
+    EditorState.readOnly.of(!!options.readonly);
     const state = EditorState.create({
       doc: value,
       extensions: [
-        basicSetup({
-          lineNumbers: false,
-          foldGutter: false,
-          highlightActiveLine: false,
-          bracketMatching: true,
-          closeBrackets: true,
-          closeBracketsKeymap: true,
-          tabSize: 2,
-          autocompletion: true,
-          searchKeymap: false,
-          syntaxHighlighting: true,
-        }),
+        basicSetup({ ...DefaultBasicOptions, ...options }),
         customTheme,
         placeHolder,
         EventExt(events),
@@ -87,14 +120,14 @@ const CodeEditor = ({
         autocompletionExtension,
         CompletionDisplay(),
         UpdateListener(onChange),
-        EditorView.lineWrapping
+        EditorView.lineWrapping,
       ],
     });
     const view = new EditorView({
       parent: containerRef.current,
       state,
     });
-    setView(view)
+    setView(view);
     return () => {
       view.destroy();
     };
@@ -104,25 +137,23 @@ const CodeEditor = ({
     if (value === undefined) {
       return;
     }
-    const currentValue = view ? view.state.doc.toString() : '';
+    const currentValue = view ? view.state.doc.toString() : "";
     if (view && value !== currentValue) {
-      insertDoc(value)
+      insertDoc(value);
     }
   }, [value, view]);
 
   useEffect(() => {
     if (view) {
-      view.state.update({effects: StateEffect.reconfigure.of([autocompletionExtension]) })
+      view.state.update({
+        effects: StateEffect.reconfigure.of([autocompletionExtension]),
+      });
     }
-  }, [
-    placeHolder,
-    customTheme,
-    autocompletionExtension
-  ]);
+  }, [placeHolder, customTheme, autocompletionExtension]);
 
-  return <div className={`${styles.container} ${className}`} ref={containerRef} />;
+  return (
+    <div className={`${styles.container} ${className}`} ref={containerRef} />
+  );
 };
 
-
-
-export default forwardRef<EditorViewRef, Partial<CodeEditorConfig>>(CodeEditor)
+export default forwardRef<EditorViewRef, Partial<CodeEditorConfig>>(CodeEditor);
