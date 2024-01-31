@@ -1,4 +1,10 @@
 .container {
+  background-color: #fff;
+  div[aria-readonly="true"] {
+    background-color: #efefef90;
+    cursor: not-allowed;
+    user-select: none;
+  }
   :global {
     .cm-editor {
       outline: 1px solid #d9d9d9;

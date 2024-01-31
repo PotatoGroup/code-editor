@@ -95,6 +95,11 @@ const CodeEditor = (
     [completions]
   );
 
+  const readOnly = useMemo(
+    () => EditorState.readOnly.of(!!options.readonly),
+    [options?.readonly]
+  );
+
   const insertDoc = useCallback(
     (text: string) => {
       const { anchor, head } = view.state.selection.ranges[0];
@@ -111,7 +116,7 @@ const CodeEditor = (
       doc: value,
       extensions: [
         basicSetup({ ...DefaultBasicOptions, ...options }),
-        EditorState.readOnly.of(!!options.readonly),
+        readOnly,
         customTheme,
         placeHolder,
         EventExt(events),
@@ -131,7 +136,7 @@ const CodeEditor = (
     return () => {
       view.destroy();
     };
-  }, []);
+  }, [readOnly]);
 
   useEffect(() => {
     if (value === undefined) {
@@ -149,10 +154,13 @@ const CodeEditor = (
         effects: StateEffect.reconfigure.of([autocompletionExtension]),
       });
     }
-  }, [placeHolder, customTheme, autocompletionExtension]);
+  }, [autocompletionExtension]);
 
   return (
-    <div className={`${styles.container} ${className}`} ref={containerRef} />
+    <div
+      className={`${styles.container} ${className ?? ""}`}
+      ref={containerRef}
+    />
   );
 };
 
