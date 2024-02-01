@@ -96,7 +96,7 @@ const CodeEditor = (
   );
 
   const readOnly = useMemo(
-    () => EditorState.readOnly.of(!!options.readonly),
+    () => EditorState.readOnly.of(!!options?.readonly),
     [options?.readonly]
   );
 
